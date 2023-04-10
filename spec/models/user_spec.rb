@@ -1,14 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a name" do # yep, you can totally use 'it'
+    user = User.create!(name: "My user Name",email: "my@gmail.com", password: "newpassword") # creating a new user 'instance'
+    expect(user.name).to eq("My user Name") # this is our expectation
+  end
 end
 
-RSpec.describe 'User' do
-  context 'before create' do  # (almost) plain English
-    before { User.create!(id: 100) }
-    it 'cannot have bugs' do
-      expect { User.create.bugs.create! }.to raise_error(ActiveRecord::RecordInvalid)  # test code
-    end
+RSpec.describe User, type: :model do
+  it "cannot have invalid email" do
+    user = User.new(name: "My user Name",email: "my", password: "newpassword") # creating a new user 'instance'
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid) # this is our expectation
+  end
+end
+
+RSpec.describe User, type: :model do
+  it "cannot have short password" do
+    user = User.new(name: "My user Name",email: "my@gmail.com", password: "new").should_not be_valid # creating a new user 'instance'
   end
 end
