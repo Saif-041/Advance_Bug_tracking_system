@@ -1,0 +1,3 @@
+<%= render 'shared/page_title', title: "Listing All #{pluralize(@bugs.count, "Bug")}" %>
+
+<%= render 'bugs/list', objs: @bugs %>
